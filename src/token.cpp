@@ -1,6 +1,6 @@
 #include "token.hpp"
 
-spl::token::token(toktype type, std::string filename, size_t column, size_t row, int value, std::string name)
+spl::token::token(toktype type, std::string filename, size_t column, size_t row, long value, std::string name)
 {
     this->_type = type;
     this->_filename = filename;
@@ -49,12 +49,12 @@ void spl::token::set_type(spl::toktype type)
     this->_type = type;
 }
 
-int spl::token::value()
+long spl::token::value()
 {
     return this->_value;
 }
 
-void spl::token::set_value(int value)
+void spl::token::set_value(long value)
 {
     this->_value = value;
 }

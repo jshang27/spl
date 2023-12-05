@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <stdexcept>
 
 #include "token.hpp"
 #include "tokenizer.hpp"
@@ -34,13 +35,20 @@ bool is_digit(std::string word)
 std::shared_ptr<spl::token> make_token(std::string name, std::string filename, size_t column, size_t row)
 {
     spl::toktype type = keywords[name];
-    int value = 0;
+    long value = 0;
     if (type == 0)
     {
         if (is_digit(name))
         {
             type = spl::PUSH;
-            value = std::stoi(name);
+            try
+            {
+                value = std::stol(name);
+            }
+            catch (std::out_of_range)
+            {
+                spl::error(spl::token(spl::PUSH, filename, column, row), "numeric value out of range");
+            }
         }
         else
         {

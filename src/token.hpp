@@ -38,11 +38,11 @@ namespace spl
         std::string _filename;
         size_t _column;
         size_t _row;
-        int _value;
+        long _value;
         std::string _name;
 
     public:
-        token(toktype type, std::string filename, size_t column, size_t row, int value = 0, std::string name = "");
+        token(toktype type, std::string filename, size_t column, size_t row, long value = 0, std::string name = "");
 
         toktype type();
         void set_type(toktype type);
@@ -56,8 +56,8 @@ namespace spl
         size_t row();
         void set_row(size_t row);
 
-        int value();
-        void set_value(int value);
+        long value();
+        void set_value(long value);
 
         std::string name();
         void set_name(std::string name);
