@@ -1,0 +1,47 @@
+#ifndef SPL_TOKEN_2023
+#define SPL_TOKEN_2023
+
+#include <optional>
+#include <memory>
+#include <string>
+
+namespace spl
+{
+    enum toktype
+    {
+        PUSH,
+        WRITE,
+    };
+
+    class token
+    {
+    private:
+        toktype _type;
+        std::shared_ptr<token> _next;
+        std::shared_ptr<token> _jmpto;
+
+        int _value;
+        std::string _name;
+
+    public:
+        token(toktype type, int value = 0, std::string name = "");
+        toktype type();
+        void set_type(toktype type);
+
+        int value();
+        void set_value(int value);
+
+        std::string name();
+        void set_name(std::string name);
+
+        std::shared_ptr<token> next();
+        void set_next(std::shared_ptr<token> next);
+
+        std::shared_ptr<token> jmp();
+        void set_jmp(std::shared_ptr<token> jmp);
+    };
+
+    const std::shared_ptr<token> none_token = std::make_shared<token>(PUSH);
+}
+
+#endif

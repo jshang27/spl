@@ -5,7 +5,7 @@
 
 #include "include.hpp"
 
-std::optional<std::string> spl::include(const char *filename)
+std::optional<std::string> spl::get_contents(const char *filename)
 {
     if (!spl::file_exists(filename))
     {

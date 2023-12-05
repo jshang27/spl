@@ -1,8 +1,10 @@
 #include <optional>
 #include <iostream>
+#include <memory>
 
 #include "error.hpp"
 #include "include.hpp"
+#include "token.hpp"
 
 int main(int argc, char **argv)
 {
@@ -12,13 +14,12 @@ int main(int argc, char **argv)
         return spl::FAIL;
     }
 
-    std::optional<std::string> contents = spl::include(argv[1]);
+    std::optional<std::string> contents = spl::get_contents(argv[1]);
     if (!contents.has_value())
     {
         spl::error("compilation failed\n");
         return spl::FAIL;
     }
-    std::cout << contents.value() << std::endl;
 
     return spl::SUCCESS;
 }

@@ -9,7 +9,7 @@
 
 namespace spl
 {
-    std::optional<std::string> include(const char *filename);
+    std::optional<std::string> get_contents(const char *filename);
 
     inline bool file_exists(const std::string &name)
     {
