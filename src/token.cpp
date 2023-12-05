@@ -1,12 +1,42 @@
 #include "token.hpp"
 
-spl::token::token(toktype type, int value, std::string name)
+spl::token::token(toktype type, std::string filename, size_t column, size_t row, int value, std::string name)
 {
     this->_type = type;
+    this->_filename = filename;
+    this->_column = column;
+    this->_row = row;
     this->_value = value;
     this->_name = name;
     this->_next = spl::none_token;
     this->_jmpto = spl::none_token;
+}
+
+std::string spl::token::filename()
+{
+    return this->_filename;
+}
+void spl::token::set_filename(std::string filename)
+{
+    this->_filename = filename;
+}
+
+size_t spl::token::column()
+{
+    return this->_column;
+}
+void spl::token::set_column(size_t column)
+{
+    this->_column = column;
+}
+
+size_t spl::token::row()
+{
+    return this->_row;
+}
+void spl::token::set_row(size_t row)
+{
+    this->_row = row;
 }
 
 spl::toktype spl::token::type()

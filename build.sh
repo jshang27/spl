@@ -1,1 +1,1 @@
-g++ -std=c++20 src/main.cpp src/error.cpp src/include.cpp src/token.cpp -o main.exe
+g++ -std=c++20 src/*.cpp -o main.exe

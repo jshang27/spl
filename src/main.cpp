@@ -5,6 +5,7 @@
 #include "error.hpp"
 #include "include.hpp"
 #include "token.hpp"
+#include "tokenizer.hpp"
 
 int main(int argc, char **argv)
 {
@@ -16,6 +17,13 @@ int main(int argc, char **argv)
 
     std::optional<std::string> contents = spl::get_contents(argv[1]);
     if (!contents.has_value())
+    {
+        spl::error("compilation failed\n");
+        return spl::FAIL;
+    }
+
+    std::shared_ptr<spl::token> first = spl::tokenize(contents.value(), argv[1]);
+    if (first == spl::none_token)
     {
         spl::error("compilation failed\n");
         return spl::FAIL;
