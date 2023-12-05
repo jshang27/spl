@@ -1,1 +1,1 @@
-g++ -std=c++20 src/*.cpp -o main.exe
+g++ -Werror -Wall -pedantic -std=c++20 src/*.cpp -o main.exe

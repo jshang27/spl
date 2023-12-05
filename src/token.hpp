@@ -25,6 +25,7 @@ namespace spl
         END,
 
         PUSH,
+        PUSH_STR,
         WRITE,
     };
 
