@@ -70,7 +70,7 @@ namespace spl
         void set_jmp(std::shared_ptr<token> jmp);
     };
 
-    const std::shared_ptr<token> none_token = std::make_shared<token>(PUSH, "", 0, 0);
+    const std::shared_ptr<token> none_token = std::make_shared<token>(UNDEF, "", 0, 0);
 }
 
 #endif

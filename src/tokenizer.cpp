@@ -19,6 +19,16 @@ std::unordered_map<std::string, spl::toktype> keywords = {
     {"if", spl::IF},
     {"else", spl::ELSE},
     {"write", spl::WRITE}};
+std::unordered_map<char, char> escape_chars = {
+    {'n', '\n'},
+    {'r', '\r'},
+    {'b', '\b'},
+    {'0', '\0'},
+    {'t', '\t'},
+    {'e', '\033'},
+    {'"', '"'},
+    {'\\', '\\'},
+    {'\'', '\''}};
 
 bool is_digit(std::string word)
 {
@@ -53,7 +63,7 @@ std::shared_ptr<spl::token> make_token(std::string name, std::string filename, s
             }
             catch (std::out_of_range &)
             {
-                spl::error(spl::token(spl::PUSH, filename, column, row), "numeric value out of range");
+                spl::error(spl::token(spl::UNDEF, filename, column, row), "numeric value out of range");
             }
         }
         else
@@ -66,11 +76,9 @@ std::shared_ptr<spl::token> make_token(std::string name, std::string filename, s
 
 std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string filename)
 {
-    spl::error("unimplemented\n");
-    exit(spl::FAIL);
-
+    contents += " ";
     size_t contents_size = contents.size();
-    std::shared_ptr<spl::token> first = std::make_shared<spl::token>(spl::PUSH, filename, 0, 0);
+    std::shared_ptr<spl::token> first = std::make_shared<spl::token>(spl::UNDEF, filename, 0, 0);
     std::shared_ptr<spl::token> current = first;
     std::vector<std::shared_ptr<spl::token>> unassigned_endables;
     size_t column = 0;
@@ -89,6 +97,7 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
             }
             current->set_next(make_token(ss.str(), filename, column, row));
             ss.clear();
+
             toktype ntt = current->next()->type();
             if (ntt == spl::FDEF || ntt == spl::IF || ntt == spl::WHILE)
             {
@@ -106,15 +115,18 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
                 case spl::FDEF:
                 {
                     current->next()->set_type(spl::FEND);
+                    unassigned_endables.pop_back();
                     break;
                 }
                 case spl::WHILE:
                 {
                     current->next()->set_type(spl::WEND);
+                    unassigned_endables.pop_back();
                     break;
                 }
-                default:
+                default: // should really only be IF
                 {
+                    unassigned_endables.pop_back();
                     break;
                 }
                 }
@@ -132,12 +144,62 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
                 spl::error(*current, "include space betwen strings and other tokens");
                 return spl::none_token;
             }
-            // TODO: include string logic
+            if (contents_size - 2 == i)
+            {
+                spl::error(*current, "unexpected quote\n");
+                return spl::none_token;
+            }
+            char c = contents[++i];
+            column++;
+            std::stringstream cur_str_stream;
+            while (c != '"')
+            {
+                if (c == '\\')
+                {
+                    if (contents_size - 2 == i)
+                    {
+                        spl::error(spl::token(spl::UNDEF, filename, column, row), "unexpected backslash\n");
+                        return spl::none_token;
+                    }
+                    if (contents[++i] == '0')
+                    {
+                        c = '\0';
+                    }
+                    else
+                    {
+                        c = escape_chars[contents[i]];
+                        if (c == 0)
+                        {
+                            spl::error(spl::token(spl::UNDEF, filename, column, row), "unknown escape char");
+                        }
+                    }
+                }
+                else if (c == '\n')
+                {
+                    spl::error(spl::token(spl::UNDEF, filename, column, row), "unterminated string\n");
+                }
+                cur_str_stream << c;
+                if (contents_size - 2 == 0)
+                {
+                    spl::error(spl::token(spl::UNDEF, filename, column, row), "unterminated string\n");
+                    return spl::none_token;
+                }
+                c = contents[++i];
+                column++;
+            }
+            std::string cur_str = cur_str_stream.str();
+            current->set_next(std::make_shared<spl::token>(spl::PUSH_STR, filename, column, row, cur_str.size(), cur_str));
+            current = current->next();
         }
         else
         {
             ss << contents[i];
         }
+    }
+    if (!unassigned_endables.empty())
+    {
+        spl::error(*current, "expected `end`\n");
+        return spl::none_token;
     }
     return first;
 }

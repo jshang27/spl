@@ -29,5 +29,11 @@ int main(int argc, char **argv)
         return spl::FAIL;
     }
 
+    while (first != spl::none_token)
+    {
+        std::cout << first->type() << "\n";
+        first = first->next();
+    }
+
     return spl::SUCCESS;
 }
