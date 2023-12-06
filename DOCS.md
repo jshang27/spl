@@ -1,5 +1,5 @@
 # DOCS
-Documentation of the SPL programming language.
+Documentation of the SPL programming language. All names of SPL keywords can be found under [token.hpp](token.hpp)'s `toktype` enum or [tokenizer.cpp](tokenizer.cpp)'s `keywords` map.
 
 ## Preface
 The stack is a list of 64-bit values (a `long` of unspecified signage) which can be visualised as a vertical "stack" of values. The `top` of the stack refers to the most recently added item, or the top-most item of the stack. The `#top` of the stack in this documentation will often be used as a number (i.e. "`#top`th member" or "a size of `#top`") and `top` as an actual reference to the top-most value.
@@ -20,6 +20,9 @@ Some operations might have signatures that don't neatly fit within the structure
     - [Escape Characters](#escape-characters)
 - [Control-flow Keywords](#control-flow-keywords)
 - [Funtional Keywords](#funtional-keywords)
+- [Mathmatics](#mathmatics)
+- [Comparison](#comparison)
+- [Bitwise](#bitwise)
 
 # Stack-related operations
 | Name     | Keyword | Signature  | Description 
@@ -94,3 +97,12 @@ Unlike the signatures used in these docs, the non-native function signatures onl
 | ANY  | `any`    | Used for declaring a function signature, where it means an indeterminate amount.
 |ARROW | `->`     | Used for declaring a function signature, where it marks the boundary between `requirements` and `return values`.
 | RET  | `return` | Returns back to the calling location. Functions will automatically have a `return` inserted at `end` if one is not already there.
+
+# Mathmatics
+Math uses the basic operations (`+` ADD, `-` SUB, `*` MUL, `/` DIV) and the modulo operator (`%` MOD). All of these functions have the signature `2 -> 1` and have nothing of particular to note. There is no order of operations.
+
+# Comparison
+Like maths, all comparison operations have the signature `2 -> 1` and follow their generic implementations. `<` LT, `<=` LE, `==` EQ, `>=` GE, `>` GT,`!=` NE.
+
+# Bitwise
+Because of the nature of "booleans" in SPL, bitwise operators also function as boolean operators. All bitwise operators except `!` NOT have the signature of `2 -> 1`. `&` AND, `^` XOR, `|` OR, `<<` RSHIFT, `>>` LSHIFT. RSHIFT and LSHIFT are not sign-aware.
