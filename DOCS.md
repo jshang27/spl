@@ -2,7 +2,7 @@
 Documentation of the SPL programming language. All names of SPL keywords can be found under [token.hpp](token.hpp)'s `toktype` enum or [tokenizer.cpp](tokenizer.cpp)'s `keywords` map.
 
 ## Preface
-The stack is a list of 64-bit values (a `long` of unspecified signage) which can be visualised as a vertical "stack" of values. The `top` of the stack refers to the most recently added item, or the top-most item of the stack. The `#top` of the stack in this documentation will often be used as a number (i.e. "`#top`th member" or "a size of `#top`") and `top` as an actual reference to the top-most value.
+The stack is a list of 64-bit values (a `long` of unspecified signage) which can be visualised as a vertical "stack" of values. The `top` of the stack refers to the most recently added item, or the top-most item of the stack. The `*top` of the stack in this documentation will often be used as a number (i.e. "`*top`th member" or "a size of `*top`") and `top` as an actual reference to the top-most value.
 
 Some syscalls will only take the latter 32 bits of an item on the stack or the latter 16 bits.
 
@@ -31,8 +31,8 @@ Some operations might have signatures that don't neatly fit within the structure
 | PUSH_STR |         | 0 -> 1     | Pushes a pointer to a string (`char*`) to the top of the stack. See further at [String](#strings).
 | POP      | `pop`   | 1 -> 0     | Pops the top-most item of the stack.
 | DUP      | `dup`   | 1 + 0 -> 1 | Duplicates `top`.
-| GET      | `get`   | any + 1 -> 1 | First, pops the `top` and stores the value. Then, duplicates and removes the `#top`th item of the stack from the position of the stack after popping the original `x`.
-| PEEK     | `peek`  | any + 1 -> 1 | Same as `get` (see above), except does not remove the `#top`th item.
+| GET      | `get`   | any + 1 -> 1 | First, pops the `top` and stores the value. Then, duplicates and removes the `*top`th item of the stack from the position of the stack after popping the original `x`.
+| PEEK     | `peek`  | any + 1 -> 1 | Same as `get` (see above), except does not remove the `*top`th item.
 | SIZE     | `size`  | 0 -> 1     | Returns the size of the stack **BEFORE** this item is added.
 | SWAP     | `swp`   | 2 -> 2     | Swaps the `top` and the item below `top`.
 | DUMP     | `dump`  | # -> 1     | Clears the stack.
