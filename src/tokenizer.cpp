@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
 
 #include "token.hpp"
 #include "tokenizer.hpp"
@@ -98,7 +99,8 @@ std::shared_ptr<spl::token> make_token(std::string name, std::string filename, s
 
 std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string filename)
 {
-    contents += " ";
+    contents += " "; // trust
+
     size_t contents_size = contents.size();
     std::shared_ptr<spl::token> first = std::make_shared<spl::token>(spl::UNDEF, filename, 0, 0);
     std::shared_ptr<spl::token> current = first;
@@ -118,7 +120,7 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
                 continue;
             }
             current->set_next(make_token(ss.str(), filename, column, row));
-            ss.clear();
+            ss.str(std::string());
 
             toktype ntt = current->next()->type();
             if (ntt == spl::FDEF || ntt == spl::IF || ntt == spl::WHILE)
@@ -153,6 +155,7 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
                 }
                 }
             }
+            current = current->next();
             if (contents[i] == '\n')
             {
                 row++;
@@ -163,12 +166,12 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
         {
             if (!ss.str().empty())
             {
-                spl::error(*current, "include space betwen strings and other tokens");
+                spl::error(spl::token(spl::UNDEF, filename, column, row), "include space betwen strings and other tokens\n");
                 return spl::none_token;
             }
             if (contents_size - 2 == i)
             {
-                spl::error(*current, "unexpected quote\n");
+                spl::error(spl::token(spl::UNDEF, filename, column, row), "unexpected quote\n");
                 return spl::none_token;
             }
             char c = contents[++i];
@@ -223,5 +226,5 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
         spl::error(*current, "expected `end`\n");
         return spl::none_token;
     }
-    return first;
+    return first->next();
 }

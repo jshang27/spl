@@ -6,6 +6,7 @@
 #include "include.hpp"
 #include "token.hpp"
 #include "tokenizer.hpp"
+#include "compile.hpp"
 
 int main(int argc, char **argv)
 {
@@ -23,16 +24,27 @@ int main(int argc, char **argv)
     }
 
     std::shared_ptr<spl::token> first = spl::tokenize(contents.value(), argv[1]);
-    if (first == spl::none_token)
+    if (first->type() == spl::UNDEF)
     {
         spl::error("compilation failed\n");
         return spl::FAIL;
     }
 
-    while (first != spl::none_token)
     {
-        std::cout << first->type() << "\n";
-        first = first->next();
+        std::string filename(argv[1]);
+        int rightmost = filename.rfind('.');
+        if (rightmost == -1)
+        {
+            spl::error("invalid filename, could not compile");
+            return spl::FAIL;
+        }
+        filename = filename.substr(0, rightmost);
+
+        if (spl::compile_to_asm(filename + ".asm", first) == spl::FAIL)
+        {
+            spl::error("compilation failed\n");
+            return spl::FAIL;
+        }
     }
 
     return spl::SUCCESS;
