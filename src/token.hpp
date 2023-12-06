@@ -9,30 +9,49 @@ namespace spl
 {
     enum toktype
     {
-        UNDEF,
-        FDEF,
-        NAME,
-        FEND,
-        ANY,
-        ARROW,
-        RET,
+        UNDEF, //
+        FDEF,  // function
+        NAME,  //
+        FEND,  // end
+        ANY,   // any
+        ARROW, // ->
+        RET,   // return
 
-        WHILE,
-        WEND,
+        WHILE, // while
+        WEND,  // end
+        IF,    // if
+        ELSE,  // else
+        END,   // end
 
-        IF,
-        ELSE,
-        END,
+        PUSH,     //
+        PUSH_STR, //
+        DUP,      // dup
+        POP,      // pop
+        GET,      // get
+        PEEK,     // peek
+        SWAP,     // swp
+        SIZE,     // size
+        DUMP,     // dump
 
-        PUSH,
-        PUSH_STR,
-        DUP,
-        POP,
-        GET,
-        PEEK,
-        SWAP,
-        SIZE,
-        DUMP,
+        ADD, // +
+        SUB, // -
+        MUL, // *
+        DIV, // /
+        MOD, // %
+
+        EQ, // ==
+        LT, // <
+        LE, // <=
+        GE, // >
+        GT, // >=
+        NE, // !=
+
+        AND,    // &
+        XOR,    // ^
+        OR,     // |
+        NOT,    // !
+        RSHIFT, // <<
+        LSHIFT, // >>
 
         WRITE
     };

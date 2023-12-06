@@ -24,7 +24,24 @@ std::unordered_map<std::string, spl::toktype> keywords = {
     {"get", spl::GET},
     {"peek", spl::PEEK},
     {"size", spl::SIZE},
-    {"dump", spl::DUMP}};
+    {"dump", spl::DUMP},
+    {"+", spl::ADD},
+    {"-", spl::SUB},
+    {"*", spl::MUL},
+    {"/", spl::DIV},
+    {"%", spl::MOD},
+    {"==", spl::EQ},
+    {"<", spl::LT},
+    {"<=", spl::LE},
+    {">=", spl::GE},
+    {">", spl::GT},
+    {"!=", spl::NE},
+    {"&", spl::AND},
+    {"^", spl::XOR},
+    {"|", spl::OR},
+    {"!", spl::NOT},
+    {"<<", spl::RSHIFT},
+    {">>", spl::LSHIFT}};
 
 std::unordered_map<char, char> escape_chars = {
     {'n', '\n'},
