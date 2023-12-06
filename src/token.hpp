@@ -26,7 +26,15 @@ namespace spl
 
         PUSH,
         PUSH_STR,
-        WRITE,
+        DUP,
+        POP,
+        GET,
+        PEEK,
+        SWAP,
+        SIZE,
+        DUMP,
+
+        WRITE
     };
 
     class token

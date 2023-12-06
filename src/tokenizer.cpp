@@ -18,17 +18,22 @@ std::unordered_map<std::string, spl::toktype> keywords = {
     {"while", spl::WHILE},
     {"if", spl::IF},
     {"else", spl::ELSE},
-    {"write", spl::WRITE}};
+    {"write", spl::WRITE},
+    {"dup", spl::DUP},
+    {"pop", spl::POP},
+    {"get", spl::GET},
+    {"peek", spl::PEEK},
+    {"size", spl::SIZE},
+    {"dump", spl::DUMP}};
+
 std::unordered_map<char, char> escape_chars = {
     {'n', '\n'},
     {'r', '\r'},
     {'b', '\b'},
-    {'0', '\0'},
     {'t', '\t'},
     {'e', '\033'},
     {'"', '"'},
-    {'\\', '\\'},
-    {'\'', '\''}};
+    {'\\', '\\'}};
 
 bool is_digit(std::string word)
 {
