@@ -25,17 +25,17 @@ Some operations might have signatures that don't neatly fit within the structure
 - [Bitwise](#bitwise)
 
 # Stack-related operations
-| Name     | Keyword | Signature  | Description 
-|:--------:|:-------:|:----------:|-------------
-| PUSH     |         | 0 -> 1     | Pushes a `long` to the top of the stack.
-| PUSH_STR |         | 0 -> 1     | Pushes a pointer to a string (`char*`) to the top of the stack. See further at [String](#strings).
-| POP      | `pop`   | 1 -> 0     | Pops the top-most item of the stack.
-| DUP      | `dup`   | 1 + 0 -> 1 | Duplicates `top`.
+| Name     | Keyword | Signature    | Description 
+|:--------:|:-------:|:------------:|-------------
+| PUSH     |         | 0 -> 1       | Pushes a `long` to the top of the stack.
+| PUSH_STR |         | 0 -> 1       | Pushes a pointer to a string (`char*`) to the top of the stack. See further at [String](#strings).
+| POP      | `pop`   | 1 -> 0       | Pops the top-most item of the stack.
+| DUP      | `dup`   | 1 + 0 -> 1   | Duplicates `top`.
 | GET      | `get`   | any + 1 -> 1 | First, pops the `top` and stores the value. Then, duplicates and removes the `*top`th item of the stack from the position of the stack after popping the original `x`.
 | PEEK     | `peek`  | any + 1 -> 1 | Same as `get` (see above), except does not remove the `*top`th item.
-| SIZE     | `size`  | 0 -> 1     | Returns the size of the stack **BEFORE** this item is added.
-| SWAP     | `swp`   | 2 -> 2     | Swaps the `top` and the item below `top`.
-| DUMP     | `dump`  | # -> 1     | Clears the stack.
+| SIZE     | `size`  | 0 -> 1       | Returns the size of the stack **BEFORE** this item is added.
+| SWAP     | `swp`   | 2 -> 2       | Swaps the `top` and the item below `top`.
+| DUMP     | `dump`  | # -> 1       | Clears the stack.
 
 ## GET, PEEK, & SIZE Example
 ```spl
@@ -89,14 +89,14 @@ end
 ```
 Unlike the signatures used in these docs, the non-native function signatures only contain the `requirements` -> `return values`. The type checker will assume `requirements` items have been popped no matter what.
 
-| Name | Keyword  | Description
-|:----:|:--------:|------------
-| FDEF |`function`| Defines a function.
-| NAME |          | A non-reserved word.
-| FEND | `end`    | Ends a function block.
-| ANY  | `any`    | Used for declaring a function signature, where it means an indeterminate amount.
-|ARROW | `->`     | Used for declaring a function signature, where it marks the boundary between `requirements` and `return values`.
-| RET  | `return` | Returns back to the calling location. Functions will automatically have a `return` inserted at `end` if one is not already there.
+| Name  | Keyword  | Description
+|:-----:|:--------:|------------
+| FDEF  |`function`| Defines a function.
+| NAME  |          | A non-reserved word.
+| FEND  | `end`    | Ends a function block.
+| ANY   | `any`    | Used for declaring a function signature, where it means an indeterminate amount.
+| ARROW | `->`     | Used for declaring a function signature, where it marks the boundary between `requirements` and `return values`.
+| RET   | `return` | Returns back to the calling location. Functions will automatically have a `return` inserted at `end` if one is not already there.
 
 # Mathmatics
 Math uses the basic operations (`+` ADD, `-` SUB, `*` MUL, `/` DIV) and the modulo operator (`%` MOD). All of these functions have the signature `2 -> 1` and have nothing of particular to note. There is no order of operations.
