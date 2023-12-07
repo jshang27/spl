@@ -18,6 +18,7 @@ Some operations might have signatures that don't neatly fit within the structure
   - [GET, PEEK, SET, SIZE Example](#get-peek-set-size-example)
   - [Strings](#strings)
     - [Escape Characters](#escape-characters)
+- [Iota](#iota)
 - [Control-flow Keywords](#control-flow-keywords)
 - [Funtional Keywords](#funtional-keywords)
 - [Mathmatics](#mathmatics)
@@ -84,6 +85,18 @@ Escape characters are characters not normally typeable that can be placed in str
 - `\"`, signifying a double quote.
 - `\\`, signifying a backslash.
 - `\0`, signifying a null character.
+
+# Iota
+Everytime the compiler comes across the keyword `iota` IOTA, it will replace `iota` with an internal counter then increment that counter. This can be used to sync the location of variables despite included libraries also pushing variables, etc.. `iota` starts at 1.
+```spl
+1 68 420 39
+function *x 0 -> 1 
+  size iota -
+end
+...
+
+*x get *y get + *y set
+```
 
 # Control-flow Keywords
 | Name | Keyword | Signature | Description

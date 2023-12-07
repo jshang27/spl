@@ -1,0 +1,19 @@
+function *a 0 -> 1
+    size iota - 
+end
+
+function *b 0 -> 1
+    size iota -
+end
+
+function *c 0 -> 1
+    size iota -
+end
+
+function main 0 -> 1 
+    0 0 0
+
+    69 *a set
+    420 *b set
+    *a get 1000 * *b get + *c set
+end

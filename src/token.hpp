@@ -54,6 +54,8 @@ namespace spl
         RSHIFT, // <<
         LSHIFT, // >>
 
+        IOTA,
+
         WRITE
     };
 

@@ -1,0 +1,17 @@
+
+function main 0 -> 1
+    1 dup 100 <= while
+        dup 15 % 0 == if
+            9 "FizzBuzz\n" write
+        else dup 3 % 0 == if
+                5 "Fizz\n" write
+            else dup 5 % 0 == if
+                    5 "Buzz\n" write
+                else
+                    putd
+                end
+            end
+        end
+        1 + dup 100 <=
+    end
+end

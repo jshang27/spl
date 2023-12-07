@@ -10,6 +10,8 @@
 #include "tokenizer.hpp"
 #include "error.hpp"
 
+unsigned long iota = 1;
+
 std::unordered_map<std::string, spl::toktype> keywords = {
     {"function", spl::FDEF},
     {"return", spl::RET},
@@ -43,7 +45,8 @@ std::unordered_map<std::string, spl::toktype> keywords = {
     {"|", spl::OR},
     {"!", spl::NOT},
     {"<<", spl::RSHIFT},
-    {">>", spl::LSHIFT}};
+    {">>", spl::LSHIFT},
+    {"iota", spl::IOTA}};
 
 std::unordered_map<char, char> escape_chars = {
     {'n', '\n'},
@@ -94,6 +97,12 @@ std::shared_ptr<spl::token> make_token(std::string name, std::string filename, s
         {
             type = spl::NAME;
         }
+    }
+    else if (type == spl::IOTA)
+    {
+        type = spl::PUSH;
+        value = iota;
+        iota++;
     }
     return std::make_shared<spl::token>(type, filename, column, row, value, name);
 }
