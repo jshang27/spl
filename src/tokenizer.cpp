@@ -26,6 +26,7 @@ std::unordered_map<std::string, spl::toktype> keywords = {
     {"peek", spl::PEEK},
     {"size", spl::SIZE},
     {"dump", spl::DUMP},
+    {"set", spl::SET},
     {"+", spl::ADD},
     {"-", spl::SUB},
     {"*", spl::MUL},

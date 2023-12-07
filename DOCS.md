@@ -15,7 +15,7 @@ Some operations might have signatures that don't neatly fit within the structure
   - [Preface](#preface)
 - [Table of Contents](#table-of-contents)
 - [Stack-related operations](#stack-related-operations)
-  - [GET, PEEK, \& SIZE Example](#get-peek--size-example)
+  - [GET, PEEK, SET, SIZE Example](#get-peek-set-size-example)
   - [Strings](#strings)
     - [Escape Characters](#escape-characters)
 - [Control-flow Keywords](#control-flow-keywords)
@@ -31,13 +31,14 @@ Some operations might have signatures that don't neatly fit within the structure
 | PUSH_STR |         | 0 -> 1       | Pushes a pointer to a string (`char*`) to the top of the stack. See further at [String](#strings).
 | POP      | `pop`   | 1 -> 0       | Pops the top-most item of the stack.
 | DUP      | `dup`   | 1 + 0 -> 1   | Duplicates `top`.
-| GET      | `get`   | any + 1 -> 1 | First, pops the `top` and stores the value. Then, duplicates and removes the `*top`th item of the stack from the position of the stack after popping the original `x`.
+| GET      | `get`   | any + 1 -> 1 | First, pops the `top` and stores the value. Then, duplicates and removes the `*top`th item of the stack from the position of the stack after popping the original `top`.
 | PEEK     | `peek`  | any + 1 -> 1 | Same as `get` (see above), except does not remove the `*top`th item.
+| SET      | `set`   | any + 2 -> 0 | Set the `*top`th item of the stack from the position of the stack after popping to `top` to the new `top`, then pop the new `top`.
 | SIZE     | `size`  | 0 -> 1       | Returns the size of the stack **BEFORE** this item is added.
 | SWAP     | `swp`   | 2 -> 2       | Swaps the `top` and the item below `top`.
 | DUMP     | `dump`  | # -> 1       | Clears the stack.
 
-## GET, PEEK, & SIZE Example
+## GET, PEEK, SET, SIZE Example
 ```spl
 5 4 3 2 1 0 3 get
 ```
@@ -55,7 +56,20 @@ Then we do a few operations that muddy the stack with values that we cannot pop,
 ```spl
 size 1 - peek
 ```
-This would place `69` on the top of the stack again. The behavior of `size` and `peek` lead to the helpful property that `size X - peek` places the `X`th item (1-indexed) from the bottom on the top of the stack.
+This would place `69` on the top of the stack again. The behavior of `size` and `peek` lead to the helpful property that `size X - peek` places the `X`th item (1-indexed) from the bottom on the top of the stack. With `set` and `peek`, we can simulate variable behavior.
+```spl
+68 420
+function *x 0 -> 1
+  size - 1
+end
+function *y 0 -> 1
+  size - 2
+end
+
+1 2 38 3 595 38 29 20
+
+*x get 1 + *x set
+```
 
 ## Strings
 Strings are defined using `"` double quotes. Single quotes are not valid characters and are considered parts of words. Strings may not have newlines in them, and they must be closed for proper compilation.

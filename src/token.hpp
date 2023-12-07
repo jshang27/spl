@@ -32,6 +32,7 @@ namespace spl
         SWAP,     // swp
         SIZE,     // size
         DUMP,     // dump
+        SET,      // /set
 
         ADD, // +
         SUB, // -
