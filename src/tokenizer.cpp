@@ -123,10 +123,19 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
     for (size_t i = 0; i < contents_size; i++)
     {
         column++;
-        if (std::isspace(contents[i]))
+        if (std::isspace(contents[i]) || contents[i] == '#')
         {
             if (ss.str().empty())
             {
+                if (contents[i] == '#')
+                {
+                    while (contents_size > i && contents[i] != '\n')
+                    {
+                        i++;
+                    }
+                    column = 0;
+                    row++;
+                }
                 continue;
             }
             current->set_next(make_token(ss.str(), filename, column, row));
@@ -170,6 +179,15 @@ std::shared_ptr<spl::token> spl::tokenize(std::string contents, std::string file
             {
                 row++;
                 column = 0;
+            }
+            else if (contents[i] == '#')
+            {
+                while (contents_size > i && contents[i] != '\n')
+                {
+                    i++;
+                }
+                column = 0;
+                row++;
             }
         }
         else if (contents[i] == '"')

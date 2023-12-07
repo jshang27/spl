@@ -14,6 +14,7 @@ Some operations might have signatures that don't neatly fit within the structure
 - [DOCS](#docs)
   - [Preface](#preface)
 - [Table of Contents](#table-of-contents)
+- [Comments](#comments)
 - [Stack-related operations](#stack-related-operations)
   - [GET, PEEK, SET, SIZE Example](#get-peek-set-size-example)
   - [Strings](#strings)
@@ -24,6 +25,12 @@ Some operations might have signatures that don't neatly fit within the structure
 - [Mathmatics](#mathmatics)
 - [Comparison](#comparison)
 - [Bitwise](#bitwise)
+
+# Comments
+Comments are written using `#` and continue until the next line.
+```spl
+34 35 + # this is a comment
+```
 
 # Stack-related operations
 | Name     | Keyword | Signature    | Description 
