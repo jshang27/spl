@@ -14,16 +14,16 @@ std::optional<std::string> spl::get_contents(const char *filename)
     }
 
     std::string contents;
+    std::ifstream ifs(filename);
+    if (ifs.fail())
     {
-        std::ifstream ifs(filename);
-        if (ifs.fail())
-        {
-            spl::error("input file inaccessible or does not exist\n");
-            return {};
-        }
-        std::stringstream ss;
-        ss << ifs.rdbuf();
-        contents = ss.str();
+        spl::error("input file inaccessible or does not exist\n");
+        return {};
     }
+    std::stringstream ss;
+    ss << ifs.rdbuf();
+    ifs.close();
+
+    contents = ss.str();
     return contents;
 }

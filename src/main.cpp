@@ -30,21 +30,19 @@ int main(int argc, char **argv)
         return spl::FAIL;
     }
 
+    std::string filename(argv[1]);
+    int rightmost = filename.rfind('.');
+    if (rightmost == -1)
     {
-        std::string filename(argv[1]);
-        int rightmost = filename.rfind('.');
-        if (rightmost == -1)
-        {
-            spl::error("invalid filename, could not compile");
-            return spl::FAIL;
-        }
-        filename = filename.substr(0, rightmost);
+        spl::error("invalid filename, could not compile");
+        return spl::FAIL;
+    }
+    filename = filename.substr(0, rightmost);
 
-        if (spl::compile_to_asm(filename + ".asm", first) == spl::FAIL)
-        {
-            spl::error("compilation failed\n");
-            return spl::FAIL;
-        }
+    if (spl::compile_to_asm(filename + ".asm", first) == spl::FAIL)
+    {
+        spl::error("compilation failed\n");
+        return spl::FAIL;
     }
 
     return spl::SUCCESS;
